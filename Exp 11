@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <pthread.h>
+
+void* threadFunction(void* arg) {
+    int id = *(int*)arg;
+    printf("Hello from Thread %d\n", id);
+    return NULL;
+}
+
+int main() {
+    pthread_t threads[3];
+    int ids[3];
+
+    // Create 3 threads
+    for(int i=0; i<3; i++) {
+        ids[i] = i+1;
+        pthread_create(&threads[i], NULL, threadFunction, &ids[i]);
+    }
+
+    // Wait for all threads to finish
+    for(int i=0; i<3; i++)
+        pthread_join(threads[i], NULL);
+
+    printf("All threads finished execution.\n");
+    return 0;
+}
+
+
+output ;
+Hello from Thread 1
+Hello from Thread 2
+Hello from Thread 3
+All threads finished execution.
