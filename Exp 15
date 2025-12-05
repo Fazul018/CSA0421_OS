@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int start, length, totalBlocks;
+    printf("Enter total memory blocks: ");
+    scanf("%d",&totalBlocks);
+
+    int memory[totalBlocks];
+    for(int i=0;i<totalBlocks;i++) memory[i]=0;
+
+    printf("Enter starting block of file: ");
+    scanf("%d",&start);
+    printf("Enter length of file: ");
+    scanf("%d",&length);
+
+    if(start+length > totalBlocks){
+        printf("Error: Not enough memory.\n");
+        return 0;
+    }
+
+    for(int i=start;i<start+length;i++) memory[i]=1;
+
+    printf("File allocated from block %d to %d\n", start, start+length-1);
+
+    printf("Memory Status:\n");
+    for(int i=0;i<totalBlocks;i++)
+        printf("Block %d: %s\n", i, memory[i]? "Occupied":"Free");
+
+    return 0;
+}
+
+
+input :
+Enter total memory blocks: 10
+Enter starting block of file: 2
+Enter length of file: 4
+
+
+output :
+File allocated from block 2 to 5
+Memory Status:
+Block 0: Free
+Block 1: Free
+Block 2: Occupied
+Block 3: Occupied
+Block 4: Occupied
+Block 5: Occupied
+Block 6: Free
+Block 7: Free
+Block 8: Free
+Block 9: Free
