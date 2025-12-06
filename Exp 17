@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>   // <-- added for abs()
+
+int main() {
+    int n, head;
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    int req[n];
+    printf("Enter request sequence: ");
+    for(int i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    int total = 0;
+    printf("\nOrder: %d", head);
+
+    for(int i = 0; i < n; i++) {
+        total += abs(head - req[i]);  // abs() works now
+        head = req[i];
+        printf(" -> %d", head);
+    }
+
+    printf("\nTotal head movement = %d\n", total);
+    return 0;
+}
+
+
+input :
+Enter number of requests: 5
+Enter request sequence: 55 58 60 70 18
+Enter initial head position: 50
+
+
+output ;
+Order: 50 -> 55 -> 58 -> 60 -> 70 -> 18
+Total head movement = 109
