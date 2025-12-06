@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+int main() {
+    int users, files;
+    char uname[10][20], fname[10][10][20];
+
+    printf("Enter number of users: ");
+    scanf("%d", &users);
+
+    for(int i=0; i<users; i++) {
+        printf("\nEnter user %d name: ", i+1);
+        scanf("%s", uname[i]);
+
+        printf("Enter number of files for %s: ", uname[i]);
+        scanf("%d", &files);
+
+        for(int j=0; j<files; j++) {
+            printf("  File %d name: ", j+1);
+            scanf("%s", fname[i][j]);
+        }
+    }
+
+    printf("\n--- Two Level Directory ---\n");
+    for(int i=0; i<users; i++) {
+        printf("User: %s\n", uname[i]);
+        printf("Files:\n");
+        for(int j=0; fname[i][j][0] != '\0'; j++)
+            printf("  %s\n", fname[i][j]);
+        printf("\n");
+    }
+    return 0;
+}
+
+
+input :
+Enter number of users: 2
+
+Enter user 1 name: user1
+Enter number of files for user1: 2
+  File 1 name: a.c
+  File 2 name: b.txt
+
+Enter user 2 name: user2
+Enter number of files for user2: 3
+  File 1 name: notes.doc
+  File 2 name: img.png
+  File 3 name: data.java
+
+
+output :
+--- Two Level Directory ---
+User: user1
+Files:
+  a.c
+  b.txt
+
+User: user2
+Files:
+  notes.doc
+  img.png
+  data.java
