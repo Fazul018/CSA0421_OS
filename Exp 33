@@ -1,0 +1,97 @@
+#include <stdio.h>
+
+int main() {
+    int pages[50], frames[10];
+    int n, f, i, j, k, found, faults = 0, index, farthest, pos;
+
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
+    printf("Enter page reference string: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &pages[i]);
+
+    printf("Enter number of frames: ");
+    scanf("%d", &f);
+
+    for (i = 0; i < f; i++)
+        frames[i] = -1;
+
+    for (i = 0; i < n; i++) {
+        found = 0;
+
+        for (j = 0; j < f; j++) {
+            if (frames[j] == pages[i]) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            for (j = 0; j < f; j++) {
+                if (frames[j] == -1) {
+                    frames[j] = pages[i];
+                    found = 1;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            farthest = -1;
+            pos = -1;
+
+            for (j = 0; j < f; j++) {
+                index = -1;
+                for (k = i + 1; k < n; k++) {
+                    if (frames[j] == pages[k]) {
+                        index = k;
+                        break;
+                    }
+                }
+                if (index == -1) {
+                    pos = j;
+                    break;
+                }
+                if (index > farthest) {
+                    farthest = index;
+                    pos = j;
+                }
+            }
+
+            frames[pos] = pages[i];
+            faults++;
+        } else if (frames[j] != pages[i]) {
+            faults++;
+        }
+
+        printf("Page %d -> ", pages[i]);
+        for (j = 0; j < f; j++)
+            if (frames[j] == -1) printf("- ");
+            else printf("%d ", frames[j]);
+        printf("\n");
+    }
+
+    printf("\nTotal Page Faults = %d\n", faults);
+    return 0;
+}
+
+
+
+input :
+Enter number of pages: 9
+Enter page reference string: 7 0 1 2 0 3 0 4 2
+Enter number of frames: 3
+
+
+output :
+Page 7 -> 7 - -
+Page 0 -> 7 0 -
+Page 1 -> 7 0 1
+Page 2 -> 2 0 1
+Page 0 -> 2 0 1
+Page 3 -> 2 3 1
+Page 0 -> 2 3 0
+Page 4 -> 2 3 4
+Page 2 -> 2 3 4
+
+Total Page Faults = 7
