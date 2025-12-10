@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <sys/stat.h>
+
+int main() {
+    struct stat st;
+    char f[50];
+
+    printf("Enter file name: ");
+    scanf("%s", f);
+
+    if (stat(f, &st) != 0) {
+        printf("File error\n");
+        return 1;
+    }
+
+    printf("User  : %c%c%c\n",
+        (st.st_mode & S_IRUSR)?'r':'-',
+        (st.st_mode & S_IWUSR)?'w':'-',
+        (st.st_mode & S_IXUSR)?'x':'-');
+
+    printf("Group : %c%c%c\n",
+        (st.st_mode & S_IRGRP)?'r':'-',
+        (st.st_mode & S_IWGRP)?'w':'-',
+        (st.st_mode & S_IXGRP)?'x':'-');
+
+    printf("Other : %c%c%c\n",
+        (st.st_mode & S_IROTH)?'r':'-',
+        (st.st_mode & S_IWOTH)?'w':'-',
+        (st.st_mode & S_IXOTH)?'x':'-');
+
+    return 0;
+}
+
+
+
+input :
+touch demo.txt
+
+
+output :
+User  : rwx
+Group : r-x
+Other : r-x
