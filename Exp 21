@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
+
+int main() {
+    int fd = open("sample.txt", O_RDONLY);
+    char buffer[50];
+    struct stat info;
+
+    int f = fcntl(fd, F_GETFL);
+    lseek(fd, 0, SEEK_SET);
+    stat("sample.txt", &info);
+
+    DIR *d = opendir(".");
+    struct dirent *e;
+
+    printf("Flags: %d\n", f);
+    printf("Size: %ld bytes\n", info.st_size);
+    printf("Files in directory:\n");
+
+    while ((e = readdir(d)) != NULL)
+        printf("%s\n", e->d_name);
+
+    closedir(d);
+    close(fd);
+    return 0;
+}
+
+
+
+input :
+Hello UNIX
+
+
+output :
+Flags: 32768
+Size: 11 bytes
+Files in directory:
+sample.txt
+a.out
+program.c
+.
+..
