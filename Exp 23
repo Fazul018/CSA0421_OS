@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char filename[50], pattern[50], line[200];
+    FILE *fp;
+
+    printf("Enter file name: ");
+    scanf("%s", filename);
+
+    printf("Enter pattern to search: ");
+    scanf("%s", pattern);
+
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("Cannot open file.\n");
+        return 1;
+    }
+
+    printf("\n--- Lines containing '%s' ---\n", pattern);
+
+    while (fgets(line, sizeof(line), fp)) {
+        if (strstr(line, pattern)) {
+            printf("%s", line);
+        }
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+
+
+input :
+Enter file name: data.txt
+Enter pattern to search: OS
+
+
+output :
+--- Lines containing 'OS' ---
+Operating Systems is important
+Linux is an OS
