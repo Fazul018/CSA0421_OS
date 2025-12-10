@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+struct Block {
+    int data;
+    int next;
+};
+
+int main() {
+    struct Block blocks[20];
+    int n, i, start, end;
+
+    printf("Enter number of blocks in the file: ");
+    scanf("%d", &n);
+
+    printf("Enter block numbers in the file chain:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &blocks[i].data);
+
+    for (i = 0; i < n - 1; i++)
+        blocks[i].next = blocks[i + 1].data;
+    blocks[n - 1].next = -1;
+
+    start = blocks[0].data;
+    end = blocks[n - 1].data;
+
+    printf("\nDirectory Entry:\n");
+    printf("Start Block: %d\n", start);
+    printf("End Block: %d\n", end);
+
+    printf("\nLinked Allocation:\n");
+    for (i = 0; i < n; i++)
+        printf("Block %d -> Next %d\n", blocks[i].data, blocks[i].next);
+
+    printf("\nTraversing the file blocks:\n");
+    int current = start;
+    for (i = 0; i < n; i++) {
+        printf("%d ", current);
+        current = blocks[i].next;
+    }
+    printf("\n");
+
+    return 0;
+}
+
+
+
+input :
+Enter number of blocks in the file: 5
+Enter block numbers in the file chain:
+4 10 6 15 20
+
+
+output :
+Directory Entry:
+Start Block: 4
+End Block: 20
+
+Linked Allocation:
+Block 4 -> Next 10
+Block 10 -> Next 6
+Block 6 -> Next 15
+Block 15 -> Next 20
+Block 20 -> Next -1
+
+Traversing the file blocks:
+4 10 6 15 20
