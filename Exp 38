@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int req[50], n, head, i, j, total = 0, temp;
+    int size, dir;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter the request queue: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter disk size: ");
+    scanf("%d", &size);
+
+    printf("Enter direction (0=left, 1=right): ");
+    scanf("%d", &dir);
+
+    req[n] = head;
+    n++;
+
+    for (i = 0; i < n - 1; i++)
+        for (j = 0; j < n - i - 1; j++)
+            if (req[j] > req[j + 1]) {
+                temp = req[j];
+                req[j] = req[j + 1];
+                req[j + 1] = temp;
+            }
+
+    int pos;
+    for (i = 0; i < n; i++)
+        if (req[i] == head) {
+            pos = i;
+            break;
+        }
+
+    if (dir == 1) {
+        for (i = pos; i < n - 1; i++)
+            total += abs(req[i + 1] - req[i]);
+        total += abs(size - 1 - req[n - 1]);
+        total += abs(req[pos - 1] - (size - 1));
+        for (i = pos - 1; i > 0; i--)
+            total += abs(req[i] - req[i - 1]);
+    } else {
+        for (i = pos; i > 0; i--)
+            total += abs(req[i] - req[i - 1]);
+        total += abs(req[0] - 0);
+        total += abs(req[pos + 1] - 0);
+        for (i = pos + 1; i < n - 1; i++)
+            total += abs(req[i + 1] - req[i]);
+    }
+
+    printf("Total head movement = %d\n", total);
+    return 0;
+}
+
+
+
+input :
+Enter number of requests: 7
+Enter the request queue: 82 170 43 140 24 16 190
+Enter initial head position: 50
+Enter disk size: 200
+Enter direction (0=left, 1=right): 1
+
+
+output :
+Total head movement = 391
