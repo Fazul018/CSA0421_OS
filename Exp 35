@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int n, i;
+    int indexBlock[20], dataBlock[20];
+
+    printf("Enter number of blocks in the file: ");
+    scanf("%d", &n);
+
+    printf("Enter block numbers for the index table:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &indexBlock[i]);
+
+    printf("Enter data stored in each block:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &dataBlock[i]);
+
+    printf("\nIndexed File Allocation:\n");
+    printf("Index Block -> Data Block\n");
+    for (i = 0; i < n; i++)
+        printf("%d -> %d\n", indexBlock[i], dataBlock[i]);
+
+    printf("\nEnter index to access (1 to %d): ", n);
+    scanf("%d", &i);
+
+    if (i >= 1 && i <= n)
+        printf("Accessing Block %d contains Data: %d\n",
+               indexBlock[i - 1], dataBlock[i - 1]);
+    else
+        printf("Invalid index\n");
+
+    return 0;
+}
+
+
+
+input :
+Enter number of blocks in the file: 4
+Enter block numbers for the index table:
+5 8 9 12
+Enter data stored in each block:
+10 20 30 40
+Enter index to access (1 to 4): 3
+
+
+output :
+Indexed File Allocation:
+Index Block -> Data Block
+5 -> 10
+8 -> 20
+9 -> 30
+12 -> 40
+
+Accessing Block 9 contains Data: 30
