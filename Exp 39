@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, head, size, i, j, temp;
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    int req[n];
+    printf("Enter requests: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter head position: ");
+    scanf("%d", &head);
+
+    printf("Enter disk size: ");
+    scanf("%d", &size);
+
+    req[n] = head;
+    n++;
+
+    // Sort requests
+    for (i = 0; i < n - 1; i++)
+        for (j = 0; j < n - i - 1; j++)
+            if (req[j] > req[j + 1]) {
+                temp = req[j];
+                req[j] = req[j + 1];
+                req[j + 1] = temp;
+            }
+
+    int pos = 0;
+    for (i = 0; i < n; i++)
+        if (req[i] == head) {
+            pos = i;
+            break;
+        }
+
+    int total = 0;
+    printf("\nC-SCAN Order: ");
+
+    // Move right
+    for (i = pos; i < n; i++) {
+        printf("%d ", req[i]);
+        if (i != pos)
+            total += abs(req[i] - req[i - 1]);
+    }
+
+    // Jump to start
+    total += (size - 1 - req[n - 1]);
+    total += (size - 1 - req[0]);
+
+    // Move from beginning
+    for (i = 0; i < pos; i++) {
+        printf("%d ", req[i]);
+        if (i > 0)
+            total += abs(req[i] - req[i - 1]);
+    }
+
+    printf("\nTotal head movement = %d\n", total);
+    return 0;
+}
+
+
+
+output :
+Enter number of requests: 8
+Enter requests: 98 183 37 122 14 124 65 67
+Enter head position: 53
+Enter disk size: 200
+
+C-SCAN Order: 53 65 67 98 122 124 183 14 37
+Total head movement = 382
